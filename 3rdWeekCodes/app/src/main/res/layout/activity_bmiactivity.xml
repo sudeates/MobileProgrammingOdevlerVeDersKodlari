@@ -11,55 +11,77 @@
         android:id="@+id/tv_BMI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
         android:gravity="center_horizontal"
         android:text="Your BMI ..."
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="342dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_CalculateBMI" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
         android:text="Height"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="92dp" />
+        app:layout_constraintEnd_toStartOf="@+id/et_Height"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
         android:text="Weight"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="161dp" />
+        app:layout_constraintEnd_toStartOf="@+id/et_Weight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
         android:id="@+id/et_Height"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="324dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="enter your height in m."
         android:inputType="text"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="80dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_Weight"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="324dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="enter your weight kg"
         android:inputType="text"
-        tools:layout_editor_absoluteX="65dp"
-        tools:layout_editor_absoluteY="149dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/et_Height"
+        app:layout_constraintVertical_bias="0.001" />
 
     <Button
         android:id="@+id/btn_CalculateBMI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="106dp"
+        android:layout_marginBottom="60dp"
         android:text="Find BMI"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="244dp" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_BMI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_Weight" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
