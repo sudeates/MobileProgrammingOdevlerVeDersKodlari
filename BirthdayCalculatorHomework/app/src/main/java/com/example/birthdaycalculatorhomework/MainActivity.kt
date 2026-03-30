@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             toplam += if (artikYilMi(i)) 366 else 365
         }
         for (i in 1 until month) {
-            toplam += ayinGunSayisi(i, year)
+            toplam += ayinGunSayisi(i-1, year)
         }
         toplam += day
         return toplam
