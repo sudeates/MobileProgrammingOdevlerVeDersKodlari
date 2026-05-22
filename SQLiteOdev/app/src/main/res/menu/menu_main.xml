@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_new_contact" android:title="New Contact" />
+    <item android:id="@+id/menu_update"      android:title="Update Contact" />
+    <item android:id="@+id/menu_delete"      android:title="Delete Contact" />
+    <item android:id="@+id/menu_call"        android:title="Call" />
+    <item android:id="@+id/menu_exit"        android:title="Exit" />
+
+</menu>
