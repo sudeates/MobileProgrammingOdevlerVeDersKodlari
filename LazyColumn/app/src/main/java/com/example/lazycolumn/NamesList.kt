@@ -1,0 +1,68 @@
+package com.example.lazycolumn
+
+import kotlin.collections.groupBy
+import kotlin.collections.toSortedMap
+import kotlin.text.first
+
+val names = listOf(
+    "Ahmet Yılmaz", "Ayşe Kaya", "Mehmet Demir", "Fatma Çelik", "Ali Şahin",
+    "Zeynep Aydın", "Mustafa Koç", "Elif Arslan", "Hasan Doğan", "Merve Kılıç",
+    "İbrahim Aslan", "Seda Çetin", "Ömer Özdemir", "Hatice Yıldız", "Emre Erdoğan",
+    "Büşra Güneş", "Yusuf Polat", "Dilan Aktaş", "Kadir Koçak", "Esra Şimşek",
+    "Recep Bulut", "Gülşen Avcı", "Murat Özcan", "Nilüfer Tekin", "Osman Güler",
+    "Selin Bozkurt", "Tarık Çakır", "Aylin Korkmaz", "Serkan Yıldırım", "Tuğba Altın",
+    "Burak Ateş", "Pınar Güzel", "Enes Şen", "Derya Karaca", "Ferhat Tunç",
+    "Arzu Kara", "Ümit Duman", "Sibel Yılmaz", "Onur Çavuş", "Neslihan Koyun",
+    "Caner Demirci", "Filiz Erdoğan", "Berk Sönmez", "Gözde Çelik", "Hakan Güngör",
+    "Şeyma Kayahan", "Tuncay Arslan", "Ezgi Polat", "Volkan Acar", "Dilek Öztürk",
+    "Alper Çınar", "Betül Kaplan", "Cem Yalçın", "Rüya Çetin", "Uğur Boz",
+    "Melek Şahin", "Tolga Güçlü", "Hacer Koç", "Serdar Doğru", "Özge Aksoy",
+    "Kemal Başar", "Sevgi Erdal", "Orhan Gürbüz", "Cansu Sert", "Yasin Koru",
+    "Tuğçe Aydın", "Ramazan Kılıç", "İrem Çakır", "Adem Yıldırım", "Leyla Demirel",
+    "Furkan Bozkurt", "Nazlı Kaya", "Koray Yüksel", "Bahar Arslan", "Bülent Ergün",
+    "Gamze Tatlı", "Hamza Demir", "Serap Uslu", "Gökhan Albayrak", "Miray Özkan",
+    "Erhan Çakır", "Songül Doğan", "Hüseyin Özer", "Burcu Atilla", "Semih Karahan",
+    "Aysun Güleç", "Oğuz Sevinç", "Pelin Yalçın", "Samet Uysal", "Zehra Baran",
+    "Erkan Değirmenci", "Ceren Kara", "Taner Güngör", "Havva Doğru", "Selim Esen",
+    "Sevinç Karadağ", "Mahir Yılmaz", "Eda Çiftçi", "Nedim Uslu", "Latife Şen",
+    "Kaan Yıldız", "Sümeyye Çelik", "Doğan Arslan", "Rumeysa Koç", "Barış Demir",
+    "Mercan Kaya", "Fikret Aslan", "Yasemin Şahin", "Erdem Polat", "Gülnur Doğan",
+    "Sinan Çetin", "Rana Yılmaz", "Tayfun Kılıç", "Hatun Özdemir", "Mert Güler",
+    "Feyza Arslan", "Cenk Aydın", "Nurcan Bulut", "Orkun Tekin", "Sena Bozkurt",
+    "Cahit Korkmaz", "Tuba Şimşek", "Serhat Yıldırım", "Nuray Çelik", "Utku Demir",
+    "Çiğdem Kara", "Necati Güneş", "İlknur Aktaş", "Ufuk Koçak", "Aslı Özcan",
+    "Süleyman Tunç", "Hacer Yalçın", "Ömer Faruk Duman", "Senem Erdoğan", "Coşkun Güzel",
+    "Nurgül Şen", "Kerem Karaca", "Dilara Avcı", "Erman Aksoy", "Yıldız Polat",
+    "Nazım Erdal", "Büşra Ateş", "Celal Gürbüz", "Şükran Sert", "Vedat Çakır",
+    "Nisan Koru", "Çağlar Duman", "Emine Yüksel", "Hüsnü Albayrak", "Cansel Özer",
+    "Ozan Atilla", "Bircan Karahan", "Tolgahan Güleç", "Sıla Sevinç", "Raif Uysal",
+    "Gülay Baran", "Mücahit Değirmenci", "Hayriye Çiftçi", "Şahin Karadağ", "Perihan Esen",
+    "Altan Yılmaz", "Didem Çelik", "Kutay Arslan", "Leman Doğan", "Rıdvan Şahin",
+    "Gülbahar Kaya", "Haldun Demir", "Müge Koç", "Sadık Aslan", "Sevim Yıldız",
+    "Özer Çetin", "Şafak Erdoğan", "Kürşat Güner", "Nermin Bulut", "Boran Çakır",
+    "Sunay Yalçın", "Tufan Korkmaz", "Şule Şimşek", "Kahraman Yıldırım", "Nazan Özdemir",
+    "Korhan Güler", "Birsen Aydın", "Devrim Polat", "Tuğrul Arslan", "Mehtap Çelik",
+    "Müzeyyen Koçak", "Atalay Tunç", "Candan Aksoy", "Fehmi Erdal", "Nesrin Güzel",
+    "Zübeyir Şen", "Bahar Karaca", "Erol Avcı", "Figen Kara", "Oktay Güneş",
+    "Şenay Aktaş", "Mevlüt Özcan", "Ayten Tekin", "Turhan Bozkurt", "Yeşim Korkmaz",
+    "Ertuğrul Çakır", "Hatice Nur Şimşek", "Naci Yıldırım", "Gönül Çelik", "Zeki Demir",
+    "Ayşegül Kaya", "Faruk Aslan", "Saadet Şahin", "Mücella Doğan", "Hilmi Yılmaz",
+    "Lale Çetin", "Enver Erdoğan", "Meryem Polat", "Rasim Güler", "Güneş Arslan",
+    "Özlem Bulut", "Selçuk Tekin", "Tülay Bozkurt", "Rauf Korkmaz", "Nalan Yalçın",
+    "Erdal Koru", "Seher Duman", "Kıvanç Yüksel", "Behice Albayrak", "Hami Özer",
+    "Funda Atilla", "Niyazi Karahan", "Ceyda Güleç", "Mümtaz Sevinç", "Dilnoza Uysal",
+    "Hande Baran", "Taylan Değirmenci", "Pelin Çiftçi", "Edip Karadağ", "Şirin Esen",
+    "Hüseyin Ali Yılmaz", "Zeynep Nur Çelik", "Özgür Arslan", "Türkan Doğan", "Sabri Şahin",
+    "Münevver Kaya", "Şevket Demir", "Kezban Koç", "Lokman Aslan", "Simge Yıldız",
+    "Haydar Çetin", "Aycan Erdoğan", "Fikri Güner", "Seda Nur Bulut", "Cemal Çakır",
+    "Ülkü Yalçın", "Nureddin Korkmaz", "Beril Şimşek", "Salih Yıldırım", "Nurhayat Özdemir",
+    "Ercüment Güler", "Ayfer Aydın", "Haluk Polat", "Nuriye Arslan", "Fevzi Çelik",
+    "Yonca Koçak", "Mevlüdiye Tunç", "Adnan Aksoy", "Güler Erdal", "Tekin Güzel",
+    "Afife Şen", "Kazım Karaca", "Lütfiye Avcı", "Bahri Kara", "Döndü Güneş",
+    "Cengizhan Aktaş", "Mihrimah Özcan", "Fethi Tekin", "Ülker Bozkurt", "Halit Korkmaz",
+    "Cemile Çakır", "Serazettin Duman", "Feyzan Yüksel", "Cumhur Albayrak", "Zehra Nur Özer",
+    "Alptekin Atilla", "Gülsüm Karahan", "Tahsin Güleç", "Makbule Sevinç", "Zühtü Uysal"
+).groupBy {it.first()}.toSortedMap()
+
+//groupBy{it.first()}-->Map<Char, List<String>>
+//toSortedMap()-->SortedMap<Char, List<String>>
